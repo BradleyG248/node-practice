@@ -15,14 +15,15 @@ export default class PokemonController {
       .get("", this.getAll)
       .get("/:id", this.getById)
       .post("", this.create)
-      .put(":/id", this.edit)
-      .delete(":/id", this.delete)
+      .put("/:id", this.edit)
+      .delete("/:id", this.delete)
   }
   getAll(req, res, next) {
     res.send(POKEMONDB)
   }
   getById(req, res, next) {
     let pokemon = POKEMONDB.find(p => p.id == req.params.id);
+    console.log(req)
     if (!pokemon) {
       return res.status(400).send("Invalid ID");
     }
@@ -41,10 +42,15 @@ export default class PokemonController {
     if (!pokemon) {
       return res.status(400).send("Invalid ID");
     }
-    pokemon[req.params.val] = req.body.val;
+    pokemon.name = req.body.name
+
     return res.send(pokemon)
+
   }
   delete(req, res, next) {
+    let pokemon = POKEMONDB.filter(p => p.id != req.params.id);
+    POKEMONDB = pokemon;
+    return res.send(pokemon);
 
   }
 }

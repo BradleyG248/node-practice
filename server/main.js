@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import bp from "body-parser";
-import pokemonController from "./controllers/PokemonController";
 import PokemonController from "./controllers/PokemonController";
 
 let server = express();
