@@ -30,20 +30,20 @@ export default class PokemonController {
     res.send(pokemon);
   }
   create(req, res, next) {
-    let newPokemon = {
-      id: POKEMONDB.length + 1,
-      name: req.body.name || ""
-    };
-    POKEMONDB.push(newPokemon);
-    return res.send(newPokemon);
+    let pokemon = req.body;
+    pokemon.id = POKEMONDB.length + 1;
+    pokemon.name = req.body.name || "Unknown... so far."
+    POKEMONDB.push(pokemon);
+    return res.send(pokemon);
   }
   edit(req, res, next) {
     let pokemon = POKEMONDB.find(p => p.id == req.params.id);
     if (!pokemon) {
       return res.status(400).send("Invalid ID");
     }
-    pokemon.name = req.body.name
-
+    pokemon = req.body;
+    pokemon.id = req.params.id;
+    POKEMONDB[req.params.id - 1] = pokemon;
     return res.send(pokemon)
 
   }
